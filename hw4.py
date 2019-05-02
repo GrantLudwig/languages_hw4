@@ -45,9 +45,15 @@ def simplify(fraction):
         den = int(den/commonDiv)
     return (num, den)
 
-#TODO
+#Generator function for generating differneces
 def genDifferences(fractionList, target):
-    print('TODO')
+    index = 0
+    while index < len(fractionList):
+        fracNum, fracDen = fractionList[index]
+        newNum = fracNum * target[1] - target[0] * fracDen
+        newDen = fracDen * target[1]
+        yield simplify((newNum, newDen))
+        index += 1
 
 #Driver code
 fileName = sys.argv[1]
@@ -64,9 +70,9 @@ print(fractionList)
 #Simplify fractions
 simFractions = [simplify(fraction) for fraction in fractionList]
 print(simFractions)
-##TODO Generator
-#for output in genDifferences(fractionList, target):
-    #print(output)
+#Generate Differences
+for output in genDifferences(fractionList, target):
+    print(output)
 #Decimal Fractions
 decimalValues = list(map((lambda x: x[0] / x[1]), fractionList))
 print(decimalValues)
